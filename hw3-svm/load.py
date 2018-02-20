@@ -31,7 +31,7 @@ def read_data(file):
     f = open(file)
     lines = f.read().split(' ')
     symbols = '${}()[].,:;+-*/&|<>=~" '
-    words = map(lambda Element: Element.translate(None, symbols).strip(), lines)
+    words = map(lambda Element: Element.translate(str.maketrans("", "", symbols)).strip(), lines)
     words = filter(None, words)
     return words
 	
@@ -44,8 +44,8 @@ def shuffle_data():
     pos_path is where you save positive review data.
     neg_path is where you save negative review data.
     '''
-    pos_path = "/Users/drosen/Dropbox/share/ML1003-share/Homework/hw3-sentiment-analysis/release/data/neg"
-    neg_path = 
+    pos_path = "data/pos"
+    neg_path = "data/neg"
 	
     pos_review = folder_list(pos_path,1)
     neg_review = folder_list(neg_path,-1)

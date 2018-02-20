@@ -388,7 +388,9 @@ need to take some care to code things efficiently. In particular,
 be aware that making copies of the weight dictionary can slow down
 your code significantly. If you want to make a copy of your weights
 (e.g. for checking for convergence), make sure you don't do this more
-than once per epoch. \\
+than once per epoch. \textbf{Also}: If you normalize your data in
+some way, be sure not to destroy the sparsity of your data. Anything
+that starts as $0$ should stay at $0$.\\
 \item Note that in every step of the Pegasos algorithm, we rescale every
 entry of $w_{t}$ by the factor $(1-\eta_{t}\lambda)$. Implementing
 this directly with dictionaries is very slow. We can make things significantly
@@ -460,11 +462,19 @@ up with ideas for new features that might help fix a problem. The
 first step in this process is to look closely at the errors that our
 model makes.
 \begin{enumerate}
-\item Choose some examples that the model got wrong. List the features that
-contributed most heavily to the descision (e.g. rank them by $\left|w_{i}x_{i}\right|$),
-along with $x_{i},w_{i},xw_{i}$. Do you understand why the model
-was incorrect? Can you think of a new feature that might be able to
-fix the issue? Include a short analysis for at least 2 incorrect examples.\\
+\item Choose an input example $x=\left(x_{1},\ldots,x_{d}\right)\in\reals^{d}$
+that the model got wrong. We want to investigate what features contributed
+to this incorrect prediction. One way to rank the importance of the
+features to the decision is to sort them by the size of their contributions
+to the score. That is, for each feature we compute $\left|w_{i}x_{i}\right|$,
+where $w_{i}$ is the weight of the $i$th feature in the prediction
+function, and $x_{i}$ is the value of the $i$th feature in the input
+$x$. Create a table of the most important features, sorted by $\left|w_{i}x_{i}\right|$,
+including the feature name, the feature value $x_{i}$, the feature
+weight $w_{i}$, and the product $w_{i}x_{i}$. Attempt to explain
+why the model was incorrect. Can you think of a new feature that might
+be able to fix the issue? Include a short analysis for at least 2
+incorrect examples.\\
 \end{enumerate}
 
 \section{Features}
